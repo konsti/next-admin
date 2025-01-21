@@ -1,4 +1,5 @@
 import { Transition, TransitionChild } from "@headlessui/react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import clsx from "clsx";
 import { cloneElement, Fragment, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -17,6 +18,7 @@ import {
   DialogOverlay,
   DialogPortal,
   DialogRoot,
+  DialogTitle,
 } from "./radix/Dialog";
 
 type Props<M extends ModelName> = {
@@ -98,8 +100,12 @@ const ClientActionDialog = <M extends ModelName>({
                   action?.className
                 )
               )}
+              aria-describedby={action.title}
               forceMount
             >
+              <VisuallyHidden.Root>
+                <DialogTitle className="sr-only">{action.title}</DialogTitle>
+              </VisuallyHidden.Root>
               {isLoading && (
                 <div className="flex items-center justify-center">
                   <Loader className="stroke-nextadmin-content-default dark:stroke-dark-nextadmin-content-default h-6 w-6 animate-spin dark:stroke-gray-300" />
